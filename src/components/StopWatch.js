@@ -13,14 +13,23 @@ class StopWatch extends Component {
     this.handlePause = this.handlePause.bind(this);
   }
 
-  loopDate = setInterval(() => {
-    this.setState({
-      time: Date(Date.now()).toString()
-    })
-  }, 1000);
+  // loopDate = setInterval(() => {
+  //   this.setState({
+  //     time: Date(Date.now()).toString()
+  //   })
+  // }, 1000);
 
   loopTime = function(){
-    this.loopDate();
+
+    var timer = setInterval(() => {
+      this.setState({
+        time: Date(Date.now()).toString()
+      })
+    }, 1000);
+    
+    if( ! this.state.runTimer) {
+        clearInterval(timer);
+    }
   } 
 
   componentDidMount(){
@@ -34,7 +43,9 @@ class StopWatch extends Component {
   }
 
   handlePause(){
-    clearInterval(this.loopTime());
+    this.setState({
+      runTimer: false
+    })
   }
 
   render() {
